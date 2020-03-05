@@ -17,10 +17,10 @@ My individual goals for this repository are as follows:
 
 ## Useful Links
 
-Kubernetes Documentation Site: https://kubernetes.io/docs/
+[Kubernetes Documentation Site](https://kubernetes.io/docs/)
 
-Kubernetes Documentation Concepts: https://kubernetes.io/docs/concepts/
+[Kubernetes Documentation Concepts](https://kubernetes.io/docs/concepts/)
 
-Kubernetes Documentation Setup: https://kubernetes.io/docs/setup/
+[Kubernetes Documentation Setup](https://kubernetes.io/docs/setup/)
 
-Kubernetes Documentation - Minikube Setup: https://kubernetes.io/docs/getting-started-guides/minikube/
+[Minikube Setup](https://kubernetes.io/docs/getting-started-guides/minikube/)
