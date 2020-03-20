@@ -243,3 +243,26 @@ Step 8/8 : COPY --from=builder /app/build /usr/share/nginx/html
  ---> 3a3ed5910c1a
 Successfully built 3a3ed5910c1a
 ```
+
+## CI
+
+With the platforms 'Github' and 'Travis CI' there is the possibility to build a CI/CD track.
+
+[Github](https://github.com/)
+
+[Travis CI](https://travis-ci.org/)
+
+Travis is linked to your own github account. Then Travis is configured to build and test the application after each git push.
+
+```
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t USERNAME/REPOSITORY -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true USERNAME/REPOSITORY npm run test
+```
