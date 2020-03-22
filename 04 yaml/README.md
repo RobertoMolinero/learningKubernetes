@@ -23,6 +23,18 @@ To use this configuration file the command 'kubectl create' with the option '-f'
 kubectl create -f pod-definition.yml
 ```
 
+To create the deployment without a configuration file 'kubectl create' is used.
+
+```
+kubectl create deployment --image nginx my-nginx
+```
+
+The command 'kubectl run' is also still possible but deprecated.
+
+```
+kubectl run nginx --image=nginx
+```
+
 ## Definition of a Pod as Template with a ReplicaSet
 
 To make the application highly available, several instances of the application are started. A ReplicaSet then monitors the status of each individual instance and starts new ones if necessary.
@@ -212,6 +224,18 @@ Update:
 ```
 $ kubectl apply -f deployment-definition.yml
 $ kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1
+```
+
+Update (Declarative, with generated yml File)
+
+```
+kubectl get pod myapp-pod -o yaml > output.yaml
+```
+
+Update (Imperative, without yml File)
+
+```
+kubectl edit pod redis
 ```
 
 Status:
