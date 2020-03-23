@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+    name: simple-webapp-color
+    labels:
+      name: simple-webapp-color
+
+spec:
+  containers:
+    - name: ubuntu-echo
+      image: ubuntu-echo
+      ports:
+        - containerPort: 8080
+      envFrom:
+        - configMapRef:
+            name: app-config

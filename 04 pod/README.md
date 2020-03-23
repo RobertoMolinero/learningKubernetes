@@ -107,3 +107,67 @@ spec:
       image: ubuntu-echo
       args: ["Hello!"]
 ```
+
+## ConfigMap
+
+Imperative
+
+```
+kubectl create configmap \
+    app-config --from-literal=APP_COLOR=blue \
+               --from-literal=APP_MOD=prod
+```
+
+Imperative with config file
+
+```
+kubectl create configmap \
+    app-config --from-file=app_config.properties
+```
+
+Declarative
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  APP_COLOR: blue
+  APP_MODE: prod
+```
+
+```
+kubectl create -f config-map.yaml
+```
+
+### View
+
+To list the current ConfigMaps you can use the command 'kubectl get configmap'. 
+
+Important: The command 'kubectl get all' does not work here!
+
+With the option 'describe' you can display the content of the configmap. 
+
+```
+$ kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   20d
+
+$ kubectl get configmap
+NAME         DATA   AGE
+app-config   1      18m
+
+$ kubectl describe configmap/app-config
+Name:         app-config
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+APP_COLOR:
+----
+blue
+Events:  <none>
+```
