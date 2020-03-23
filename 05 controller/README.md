@@ -1,43 +1,19 @@
-# Declarative Deployments in Kubernetes
+# Controller
 
-## Definition of a Pod
-
-The following attributes are the minimum that must be present in each configuration file.
-
-```
-apiVersion: v1
-kind: Pod
-metadata:
-    name: myapp-pod
-    labels:
-        app: myapp
-spec:
-    containers:
-        - name: nginx-container
-          image: nginx
-```
-
-To use this configuration file the command 'kubectl create' with the option '-f' is used.
-
-```
-kubectl create -f pod-definition.yml
-```
-
-To create the deployment without a configuration file 'kubectl create' is used.
-
-```
-kubectl create deployment --image nginx my-nginx
-```
-
-The command 'kubectl run' is also still possible but deprecated.
-
-```
-kubectl run nginx --image=nginx
-```
-
-## Definition of a Pod as Template with a ReplicaSet
+## Definition of a ReplicaSet
 
 To make the application highly available, several instances of the application are started. A ReplicaSet then monitors the status of each individual instance and starts new ones if necessary.
+
+Imperative
+
+```
+$ kubectl create deployment webapp --image=kodekloud/webapp-color
+deployment.apps/webapp created
+$ kubectl scale deployment webapp --replicas=3
+deployment.apps/webapp scaled
+```
+
+Declarative
 
 ```
 apiVersion: v1
@@ -89,7 +65,7 @@ The ReplicaSet is running and 3 predefined instances of the application are onli
 
 To test the stability of the system you can now shut down a pod from the command line and see what happens.
 
-```diff
+```
 $ kubectl delete pod myapp-replicaset-gnr4b
 pod "myapp-replicaset-gnr4b" deleted
 
