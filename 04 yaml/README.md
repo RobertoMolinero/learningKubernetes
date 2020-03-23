@@ -199,6 +199,18 @@ A second problem arises when the imperative and declarative approach interfere. 
 
 A test system can be changed with imperative interventions. A production system should only be modified with declarative interventions!
 
+If you want to be declarative, but have no configuration from the existing system, you can have this file created.
+
+```
+kubectl get pod myapp-pod -o yaml > output.yaml
+```
+
+To set up a new system declaratively, you can generate a kind of template. The option '--dry-run' ensures that nothing is created. The option '-o yaml' generates the output in the desired format.
+
+```
+kubectl create deployment --image=nginx nginx --dry-run -o yaml > nginx-deployment.yaml
+```
+
 ## Update Strategies
 
 > Recreate: All Pods are terminated simultaneously. Then all new Pods are started simultaneously. This procedure is the fastest. However, the availability of the deployment is interrupted between these two steps.
