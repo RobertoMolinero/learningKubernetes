@@ -1,4 +1,4 @@
-# Controller
+# K8s Controllers
 
 ## Definition of a ReplicaSet
 
