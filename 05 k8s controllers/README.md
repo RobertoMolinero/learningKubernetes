@@ -13,6 +13,31 @@ $ kubectl scale deployment webapp --replicas=3
 deployment.apps/webapp scaled
 ```
 
+There is also the command 'kubectl run'. This command is deprecated without specifying the type to be generated and will probably be deleted in a future version. A corresponding warning message is displayed during execution. 
+
+```
+$ kubectl run nginx --image=nginx
+kubectl run --generator=deployment/apps.v1 is DEPRECATED and will be removed in a future version. Use kubectl run --generator=run-pod/v1 or kubectl create instead.
+deployment.apps/nginx created
+```
+
+The command creates a complete deployment. Together with a ReplicaSet and a set of Pods.
+
+```
+$ kubectl get all
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-6db489d4b7-lgjzh   1/1     Running   0          12s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   22d
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   1/1     1            1           12s
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-6db489d4b7   1         1         1       12s
+```
+
 Declarative
 
 ```
@@ -195,19 +220,19 @@ kubectl create deployment --image=nginx nginx --dry-run -o yaml > nginx-deployme
 
 The individual commands for controlling the update cycle follow.
 
-Create:
+Create
 
 ```
 $ kubectl create -f deployment-definition.yml
 ```
 
-Get:
+Get
 
 ```
 $ kubectl get deployments
 ```
 
-Update:
+Update
 
 ```
 $ kubectl apply -f deployment-definition.yml
@@ -226,14 +251,14 @@ Update (Imperative, without yml File)
 kubectl edit pod redis
 ```
 
-Status:
+Status
 
 ```
 $ kubectl rollout status deployment/myapp-deployment
 deployment "myapp-deployment" successfully rolled out
 ```
 
-Rollback:
+Rollback
 
 ```
 $ kubectl rollout undo deployment/myapp-deployment
