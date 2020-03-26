@@ -16,7 +16,5 @@ spec:
         - name: APP_COLOR
           valueFrom:
             configMapKeyRef:
-              key: APP_COLOR
               name: app-config
-
-
+              key: APP_COLOR
