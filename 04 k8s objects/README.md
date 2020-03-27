@@ -107,3 +107,109 @@ spec:
       image: ubuntu-echo
       args: ["Hello!"]
 ```
+
+## Workloads
+
+The previous Pods are applications that are permanently available once they are started.
+
+But there are use cases where an application should only fulfill a certain task. If this task is finished, the application can also terminate.
+
+### Job
+
+A job is a task that is started manually, fulfils a defined task and is then completed.
+
+```
+docker run ubuntu expr 3 + 2 
+```
+
+This can also be achieved with a Pod. But the Pod would be started again and again, because Kubernetes assumes that a Pod should always be available.
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+    name: math-pod
+spec:
+  containers:
+    - name: math-add
+      image: ubuntu
+      command: ['express', '3', '+', '2']
+```
+
+The restart can be prevented with the option 'restartPolicy'. 
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+    name: math-pod
+spec:
+  containers:
+    - name: math-add
+      image: ubuntu
+      command: ['express', '3', '+', '2']
+  restartPolicy: Never
+```
+
+The correct type for the object is 'Job'. Here you can also define the number of parallel running tasks and the number of tasks to be completed. 
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: math-add-job
+
+spec:
+  completions: 3
+  parallelism: 3
+  template:
+    spec:
+      containers:
+        - name: math-add
+          image: ubuntu
+          command: ['expr', '3', '+', '2']
+      restartPolicy: Never
+```
+
+The object is controlled via the usual commands 'create', 'logs' and 'delete'. 
+
+```
+kubectl create -f job-definition.yml
+
+kubectl get jobs
+kubectl get pods
+
+kubectl logs math-add-job-.....
+
+kubectl delete job math-add-job
+```
+
+### CronJob
+
+Jobs that should run at certain times or in certain intervals are described with 'CronJobs'.
+
+```
+apiVersion: batch/v1beta1
+kind: CronJob
+
+metadata:
+  name: reporting-cron-job
+
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      completions: 3
+      parallelism: 3
+      template:
+        spec:
+          containers:
+            - name: math-add
+              image: ubuntu
+          restartPolicy: Never
+```
+
+For the time specification under 'schedule' the time is given in cron format.
+
+[Wikipedia Cron](https://en.wikipedia.org/wiki/Cron)
