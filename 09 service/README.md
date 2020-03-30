@@ -4,11 +4,11 @@
 
 There are 3 different port specifications within the service.
 
-| Name          | Description                     |
-| ------------- |---------------------------------|
-| targetPort    | Port of the Pod to be connected |
-| port          | Port of the service             |
-| nodePort      | External port of the node       |
+| Name          | Description                      |
+| ------------- | -------------------------------- |
+| targetPort    | Port of the Pod to be connected  |
+| port          | Port of the service              |
+| nodePort      | External port of the node        |
 
 These 3 ports are defined in a separate file.
 
@@ -30,8 +30,6 @@ spec:
     app: myapp
     type: front-end
 ```
-
-The two definitions are started with 'kubectl create -f'.
 
 Afterwards, the installed server can be accessed via the internal IP of the node.
 
@@ -72,4 +70,67 @@ Commercial support is available at
 <p><em>Thank you for using nginx.</em></p>
 </body>
 </html>
+```
+
+# For multiple containers
+
+For a modern web application the different components are booted as separate containers.
+
+```
+docker run -d --name=redis redis
+docker run -d --name=db postgresql:9.4
+docker run -d --name=vote -p 5000:80 voting-app
+docker run -d --name=result -p 5001:80 result-app
+docker run -d --name=worker worker
+```
+
+All components function perfectly. However, they do not know about each other and cannot communicate with each other.
+
+To get a stack of connected components, the links must be specified with the '--link' option.
+
+```
+docker run -d --name=redis redis
+docker run -d --name=db postgresql:9.4
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
+docker run -d --name=result -p 5001:80 --link db:db result-app
+docker run -d --name=worker --link redis:redis --link db:db worker
+```
+
+# Ingress
+
+An API object that manages external access to the services in a cluster, typically HTTP.
+
+Ingress may provide load balancing, SSL termination and name-based virtual hosting.
+
+[Kubernetes Documentation](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+
+# Network Policies
+
+...
+
+```
+$ kubectl get networkpolicy
+NAME             POD-SELECTOR   AGE
+payroll-policy   name=payroll   5m6s
+```
+
+...
+
+```
+$ kubectl describe networkpolicy/payroll-policy
+Name:         payroll-policy
+Namespace:    default
+Created on:   2020-03-27 14:21:59 +0000 UTC
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration:
+                {"apiVersion":"networking.k8s.io/v1","kind":"NetworkPolicy","metadata":{"annotations":{},"name":"payroll-policy","namespace":"default"},"s...
+Spec:
+  PodSelector:     name=payroll
+  Allowing ingress traffic:
+    To Port: 8080/TCP
+    From:
+      PodSelector: name=internal
+  Allowing egress traffic:
+    <none> (Selected pods are isolated for egress connectivity)
+  Policy Types: Ingress
 ```

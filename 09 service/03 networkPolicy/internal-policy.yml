@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"NetworkPolicy","metadata":{"annotations":{},"name":"payroll-policy","namespace":"default"},"spec":{"ingress":[{"from":[{"podSelector":{"matchLabels":{"name":"internal"}}}],"ports":[{"port":8080,"protocol":"TCP"}]}],"podSelector":{"matchLabels":{"name":"payroll"}},"policyTypes":["Ingress"]}}
+  creationTimestamp: "2020-03-27T14:21:59Z"
+  generation: 1
+  name: internal-policy
+  namespace: default
+  resourceVersion: "606"
+  selfLink: /apis/networking.k8s.io/v1/namespaces/default/networkpolicies/payroll-policy
+  uid: 8e80713e-0a5e-46e4-ab07-5b07e6a8b89b
+spec:
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          name: payroll
+    ports:
+      - port: 8080
+        protocol: TCP
+  - to:
+      - podSelector:
+          matchLabels:
+            name: mysql
+    ports:
+      - port: 3306
+        protocol: TCP
+  podSelector:
+    matchLabels:
+      name: payroll
+  policyTypes:
+    - Egress
