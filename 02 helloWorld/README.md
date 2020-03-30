@@ -6,7 +6,7 @@ In the following a Hello World scenario with a simple Kubernetes cluster will be
 
 The first step is to start minikube itself.
 
-```
+```console
 $ minikube start
 😄  minikube v1.7.3 on Linuxmint 19.3
 ✨  Using the virtualbox driver based on existing profile
@@ -20,7 +20,7 @@ $ minikube start
 
 To ensure that all systems are working properly, the status can be queried.
 
-```
+```console
 $ minikube status
 host: Running
 kubelet: Running
@@ -32,14 +32,14 @@ kubeconfig: Configured
 
 The cluster is initially empty. A deployment must be created and then published as a service.
 
-```
+```console
 $ kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10
 deployment.apps/hello-minikube created
 ```
 
 To make the deployment accessible as a service.
 
-```
+```console
 $ kubectl expose deployment hello-minikube --type=NodePort --port=8080
 service/hello-minikube exposed
 ```
@@ -50,7 +50,7 @@ The content of the cluster can be retrieved with 'kubectl get <nodes/pods/servic
 
 If the state of the resource changes you can wait for these changes with the option '-w'. Each change results in a new line with updated state.
 
-```
+```console
 $ kubectl get pods
 NAME                              READY   STATUS    RESTARTS   AGE
 hello-minikube-797f975945-dpjzb   1/1     Running   0          4m36s
@@ -66,7 +66,7 @@ hello-minikube-797f975945-dpjzb   1/1     Running   0          4m48s   172.17.0.
 
 Get the URL of the published service. This URL can be opened in any browser.
 
-```
+```console
 $ minikube service hello-minikube --url
 http://192.168.99.100:31309
 ```
@@ -75,7 +75,7 @@ One of the extensions of Kubernetes offers a web interface with all information 
 
 To be able to access this page a small HTTP server is started with the following command.
 
-```
+```console
 $ minikube dashboard
 🤔  Verifying dashboard health ...
 🚀  Launching proxy ...
@@ -86,7 +86,7 @@ Opening in existing browser session.
 
 The 'kubectl watch' command is used to analyze the cluster in the console. The 'dump' option is used to output all known parameters.
 
-```
+```console
 $ kubectl cluster-info
 Kubernetes master is running at https://192.168.99.100:8443
 KubeDNS is running at https://192.168.99.100:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
@@ -98,7 +98,7 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 The test environment can be dismantled in reverse order with the command 'kubectl' and the option 'delete'.
 
-```
+```console
 $ kubectl delete service hello-minikube
 service "hello-minikube" deleted
 
@@ -110,7 +110,7 @@ deployment.apps "hello-minikube" deleted
 
 The last step is to shut down and delete the cluster.
 
-```
+```console
 $ minikube stop
 ✋  Stopping "minikube" in virtualbox ...
 🛑  "minikube" stopped.

@@ -16,7 +16,7 @@ Liveness probes prüfen ob ein Container verfügbar ist.
 
 Liveness probe via a command from the console
 
-```
+```yaml
 spec:
   containers:
     - name: simple-webapp
@@ -32,7 +32,7 @@ spec:
 
 Liveness probe via TCP connection
 
-```
+```yaml
 spec:
   containers:
     - name: redis-db
@@ -44,7 +44,7 @@ spec:
 
 Liveness probe via HTTP connection
 
-```
+```yaml
 spec:
   containers:
     - name: simple-webapp
@@ -66,7 +66,7 @@ Readiness probes prüfen ab wann ein gestarteter Container bereit ist Daten entg
 
 Readiness probe via a command from the console
 
-```
+```yaml
 spec:
   containers:
     - name: simple-webapp
@@ -82,7 +82,7 @@ spec:
 
 Readiness probe via TCP connection
 
-```
+```yaml
 spec:
   containers:
     - name: redis-db
@@ -94,7 +94,7 @@ spec:
 
 Readiness probe via HTTP connection
 
-```
+```yaml
 spec:
   containers:
     - name: simple-webapp
@@ -118,7 +118,7 @@ Startup probes check if a container has been started. If the check is configured
 
 ...
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 
@@ -135,7 +135,7 @@ spec:
 
 ...
 
-```
+```console
 kubectl logs -f event-simulator-pod event-simulator
 ```
 
@@ -147,6 +147,6 @@ kubectl logs -f event-simulator-pod event-simulator
 
 ...
 
-```
+```console
 minikube addons enable metrics-server
 ```

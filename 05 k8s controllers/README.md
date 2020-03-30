@@ -6,16 +6,17 @@ To make the application highly available, several instances of the application a
 
 Imperative
 
-```
+```console
 $ kubectl create deployment webapp --image=kodekloud/webapp-color
 deployment.apps/webapp created
+
 $ kubectl scale deployment webapp --replicas=3
 deployment.apps/webapp scaled
 ```
 
 There is also the command 'kubectl run'. This command is deprecated without specifying the type to be generated and will probably be deleted in a future version. A corresponding warning message is displayed during execution. 
 
-```
+```console
 $ kubectl run nginx --image=nginx
 kubectl run --generator=deployment/apps.v1 is DEPRECATED and will be removed in a future version. Use kubectl run --generator=run-pod/v1 or kubectl create instead.
 deployment.apps/nginx created
@@ -23,7 +24,7 @@ deployment.apps/nginx created
 
 The command creates a complete deployment. Together with a ReplicaSet and a set of Pods.
 
-```
+```console
 $ kubectl get all
 NAME                         READY   STATUS    RESTARTS   AGE
 pod/nginx-6db489d4b7-lgjzh   1/1     Running   0          12s
@@ -40,7 +41,7 @@ replicaset.apps/nginx-6db489d4b7   1         1         1       12s
 
 Declarative
 
-```
+```yaml
 apiVersion: v1
 kind: ReplicaSet
 metadata:
@@ -69,7 +70,7 @@ selector:
 
 To start the ReplicaSet use the command 'kubectl create' with the option '-f'.
 
-```
+```console
 $ kubectl create -f 02-replicaset-definition.yml 
 replicaset.apps/myapp-replicaset created
 
@@ -90,7 +91,7 @@ The ReplicaSet is running and 3 predefined instances of the application are onli
 
 To test the stability of the system you can now shut down a pod from the command line and see what happens.
 
-```
+```console
 $ kubectl delete pod myapp-replicaset-gnr4b
 pod "myapp-replicaset-gnr4b" deleted
 
@@ -111,7 +112,7 @@ The ReplicaSet registers the failure and immediately starts a new Pod.
 
 Even with too many Pods the ReplicaSet intervenes and corrects.
 
-```
+```console
 $ kubectl create -f 01-pod-definition.yml 
 pod/myapp-pod created
 
@@ -159,7 +160,7 @@ The difference between the number of available and desired Pods is formed. Depen
 
 To exit the system, the ReplicaSet itself is deleted.
 
-```
+```console
 $ kubectl get all
 NAME                         READY   STATUS    RESTARTS   AGE
 pod/myapp-replicaset-m6wkd   1/1     Running   0          3h15m
@@ -182,13 +183,13 @@ There are 2 possibilities to make changes to a cluster.
 
 Imperative with a simple command from a console.
 
-```
+```console
 kubectl scale --replicas=6 -f replicaset-definition.yml
 ```
 
 And declarative with a modified and reloaded Pod Definition file.
 
-```
+```console
 kubectl replace -f replicaset-definition.yml
 ```
 
@@ -202,13 +203,13 @@ A test system can be changed with imperative interventions. A production system 
 
 If you want to be declarative, but have no configuration from the existing system, you can have this file created.
 
-```
+```console
 kubectl get pod myapp-pod -o yaml > output.yaml
 ```
 
 To set up a new system declaratively, you can generate a kind of template. The option '--dry-run' ensures that nothing is created. The option '-o yaml' generates the output in the desired format.
 
-```
+```console
 kubectl create deployment --image=nginx nginx --dry-run -o yaml > nginx-deployment.yaml
 ```
 
@@ -222,45 +223,45 @@ The individual commands for controlling the update cycle follow.
 
 Create
 
-```
+```console
 $ kubectl create -f deployment-definition.yml
 ```
 
 Get
 
-```
+```console
 $ kubectl get deployments
 ```
 
 Update
 
-```
+```console
 $ kubectl apply -f deployment-definition.yml
 $ kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1
 ```
 
 Update (Declarative, with generated yml File)
 
-```
+```console
 kubectl get pod myapp-pod -o yaml > output.yaml
 ```
 
 Update (Imperative, without yml File)
 
-```
+```console
 kubectl edit pod redis
 ```
 
 Status
 
-```
+```console
 $ kubectl rollout status deployment/myapp-deployment
 deployment "myapp-deployment" successfully rolled out
 ```
 
 Rollback
 
-```
+```console
 $ kubectl rollout undo deployment/myapp-deployment
 ```
 
@@ -268,7 +269,7 @@ $ kubectl rollout undo deployment/myapp-deployment
 
 Without History.
 
-```
+```console
 $ kubectl create -f deployment-definition.yml
 deployment.apps/myapp-deployment created
 
@@ -280,7 +281,7 @@ REVISION  CHANGE-CAUSE
 
 With History.
 
-```
+```console
 $ kubectl create -f deployment-definition.yml --record --save-config
 deployment.apps/myapp-deployment created
 
@@ -292,7 +293,7 @@ REVISION  CHANGE-CAUSE
 
 After 2 further updates (von 'nginx' nach 'nginx:1.12' und von 'replicas:3' nach 'replicas:6') the history is as follows.
 
-```
+```console
 $ kubectl apply -f deployment-definition.yml --record
 deployment.apps/myapp-deployment configured
 

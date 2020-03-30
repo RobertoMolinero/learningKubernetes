@@ -4,7 +4,7 @@
 
 Imperative
 
-```
+```console
 kubectl create configmap \
     app-config --from-literal=APP_COLOR=blue \
                --from-literal=APP_MOD=prod
@@ -12,14 +12,14 @@ kubectl create configmap \
 
 Imperative with config file
 
-```
+```console
 kubectl create configmap \
     app-config --from-file=app_config.properties
 ```
 
 Declarative
 
-```
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -37,7 +37,7 @@ Important: The command 'kubectl get all' does not work here!
 
 With the option 'describe' you can display the content of the configmap. 
 
-```
+```console
 $ kubectl get all
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   20d
@@ -64,7 +64,7 @@ Events:  <none>
 
 Imperative
 
-```
+```console
 kubectl create secret generic \
     app-secret --from-literal=DB_Host=mysql \
     app-secret --from-literal=DB_User=root \
@@ -73,14 +73,14 @@ kubectl create secret generic \
 
 Imperative with config file
 
-```
+```console
 kubectl create secret generic \
     app-secret --from-file=app_secret.properties
 ```
 
 Declarative
 
-```
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -93,7 +93,7 @@ data:
 
 To generate a hash value from any string you can use the following command in the console.
 
-```
+```console
 $ echo -n 'secret' | base64
 c2VjcmV0
 ```
@@ -104,7 +104,7 @@ To list the current Secrets you can use the command 'kubectl get secret'.
 
 Important: The command 'kubectl get all' does not work here!
 
-```
+```console
 $ kubectl get secret
 NAME                  TYPE                                  DATA   AGE
 app-secret            Opaque                                3      2m32s
@@ -113,7 +113,7 @@ default-token-95g78   kubernetes.io/service-account-token   3      20d
 
 Details about a specific object are requested as usual with describe.
 
-```
+```console
 $ kubectl describe secret app-secret
 Name:         app-secret
 Namespace:    default
@@ -133,7 +133,7 @@ DB_User:      4 bytes
 
 A Service Account is an account for a technical process.
 
-```
+```console
 kubectl create serviceaccount dashboard-sa
 ```
 
@@ -141,31 +141,31 @@ To list the current Service Accounts you can use the command 'kubectl get servic
 
 Important: The command 'kubectl get all' does not work here!
 
-```
+```console
 kubectl get serviceaccounts
 ```
 
 Details of a single service account.
 
-```
+```console
 kubectl describe serviceaccount dashboard-sa
 ```
 
 The information that defines the service account is located in the object under the folder '/var/run/secrets/kubernetes.io/serviceaccount'. 
 
-```
+```console
 kubectl exec -it my-kubernetes-dashboard ls /var/run/secrets/kubernetes.io/serviceaccount
 ```
 
 To read the token from the service account. This is useful to test the token manually.
 
-```
+```console
 kubectl exec -it my-kubernetes-dashboard cat /var/run/secrets/kubernetes.io/serviceaccount/token
 ```
 
 Other possibility:
 
-```
+```console
 kubectl describe secret dashboard-sa
 ```
 
@@ -175,7 +175,7 @@ Objects can use the attribute 'requests' to specify how much memory and CPU they
 
 With the attribute 'limits' the maximum value is set. If one of the specified limits is exceeded during execution, Kubernetes will terminate this Pod.
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 
@@ -201,7 +201,7 @@ spec:
 
 It is also possible to create a limit object individually and assign it to another object later.
 
-```
+```yaml
 apiVersion: v1
 kind: LimitRange
 metadata:
@@ -219,13 +219,13 @@ spec:
 
 The allocation of resources can be controlled with a kind of markers. For example, you can assign a marker (or tag) to a node in the form of a key-value pair.
 
-```
+```console
 kubectl taint nodes node-name key=value:taint-effect
 ```
 
 In this example the node 'node1' is marked with the key 'app' and the value 'blue'.
 
-```
+```console
 kubectl taint nodes node1 app=blue:NoSchedule
 ```
 
@@ -239,19 +239,19 @@ The final keyword, in this case 'NoSchedule', indicates how this marker should b
 
 To remove a set marker, simply repeat the command with an appended '-'.
 
-```
+```console
 kubectl taint nodes node1 app=blue:NoSchedule-
 ```
 
 The taints of a specific node can be viewed with 'describe'. Since the 'describe' of a node can be very detailed, it is best to filter the result with 'grep'.
 
-```
+```console
 kubectl describe node kubemaster | grep Taint
 ```
 
 The resource to be distributed to the nodes now has a list of tolerations indicating which markers should be used.
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 
@@ -275,7 +275,7 @@ With node affinities more complex rules for assignment are possible.
 
 An example: The own nodes get the key 'size' and the values 'small', 'medium' and 'large' as markers. Then you can define that a Pod can run on all nodes that are not marked as 'small'.
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 
@@ -303,7 +303,7 @@ The following operators can be used for evaluation: In, NotIn, Exists, DoesNotEx
 
 The constructs 'Labels' and 'Selectors' are there for easy assignment. Each resource can get a label.
 
-```
+```console
 kubectl label nodes node-1 size=Large
 ```
 
@@ -311,7 +311,7 @@ Another resource then refers by means of a 'selector' to all resources that have
 
 This is often used for 'ReplicaSets' which are supposed to keep a lot of Pods running. Since there may be more than the own Pods in the namespace, they are distinguished by their labels.  
 
-```
+```yaml
 apiVersion: apps/v1
 kind: ReplicaSet
 

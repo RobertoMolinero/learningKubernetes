@@ -4,7 +4,7 @@
 
 The following attributes are the minimum that must be present in each configuration file.
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -19,19 +19,19 @@ spec:
 
 To use this configuration file the command 'kubectl create' with the option '-f' is used.
 
-```
+```console
 kubectl create -f pod-definition.yml
 ```
 
 To create the pod without a configuration file 'kubectl run' is used.
 
-```
+```console
 kubectl run --generator=run-pod/v1 redis --image=redis
 ```
 
 In order to really work with a Pod, its ports must be unblocked. This is done with an object of type 'service'.
 
-```
+```console
 kubectl run --generator=run-pod/v1 redis --image=redis
 kubectl expose pod redis --port=6379 --name redis-service
 ```
@@ -42,14 +42,14 @@ kubectl expose pod redis --port=6379 --name redis-service
 
 Image
 
-```
+```dockerfile
 FROM ubuntu:18.04
 CMD ["echo", "Hello from the Docker-Image"]
 ```
 
 Build & Run
 
-```
+```console
 $ docker build -t ubuntu-echo .
 Sending build context to Docker daemon  4.096kB
 Step 1/2 : FROM ubuntu:18.04
@@ -68,14 +68,14 @@ Hello from the Docker-Image
 
 Image
 
-```
+```dockerfile
 FROM ubuntu:18.04
 ENTRYPOINT ["echo"]
 ```
 
 Build & Run
 
-```
+```console
 $ docker build -t ubuntu-echo -f Dockerfile.arg .
 Sending build context to Docker daemon  4.096kB
 Step 1/2 : FROM ubuntu:18.04
@@ -94,7 +94,7 @@ Hello from the Docker-Image (with args)
 
 Start the last image inside as a Pod. The argument "Hello!" is passed.
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 
@@ -118,13 +118,13 @@ But there are use cases where an application should only fulfill a certain task.
 
 A job is a task that is started manually, fulfils a defined task and is then completed.
 
-```
+```dockerfile
 docker run ubuntu expr 3 + 2 
 ```
 
 This can also be achieved with a Pod. But the Pod would be started again and again, because Kubernetes assumes that a Pod should always be available.
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -138,7 +138,7 @@ spec:
 
 The restart can be prevented with the option 'restartPolicy'. 
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -174,7 +174,7 @@ spec:
 
 The object is controlled via the usual commands 'create', 'logs' and 'delete'. 
 
-```
+```console
 kubectl create -f job-definition.yml
 
 kubectl get jobs
@@ -189,7 +189,7 @@ kubectl delete job math-add-job
 
 Jobs that should run at certain times or in certain intervals are described with 'CronJobs'.
 
-```
+```yaml
 apiVersion: batch/v1beta1
 kind: CronJob
 

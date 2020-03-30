@@ -8,7 +8,7 @@ The installation is currently documented here:
 
 [Installation docker-compose](https://docs.docker.com/compose/install/)
 
-```
+```console
 $ sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -22,7 +22,7 @@ The command 'run' used so far is a combination of the commands 'create' and 'sta
 
 So you could also start the 'Hello World' from chapter '02 helloWorld' as follows.
 
-```
+```console
 $ docker create hello-world
 430a4f3e2d67a93dc465f7b745901dd582e2580a404bc2726fcaa7329a3ea6b8
 
@@ -54,7 +54,7 @@ For more examples and ideas, visit:
    
 The longer you use Docker the more images accumulate in the local memory. Normally 'docker ps' only shows the currently running containers. To get a list of all containers ever created you also need the option '--all'.
 
-```
+```console
 $ docker ps --all
 CONTAINER ID        IMAGE               COMMAND                 CREATED             STATUS                         PORTS               NAMES
 554393ae15a6        busybox             "echo hi there"         7 seconds ago       Exited (0) 7 seconds ago                           competent_northcutt
@@ -65,7 +65,7 @@ CONTAINER ID        IMAGE               COMMAND                 CREATED         
 
 This memory can be released again.
 
-```
+```console
 $ docker system prune
 WARNING! This will remove:
         - all stopped containers
@@ -89,7 +89,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 The log outputs of a container can be queried with the option 'logs'.
 
-```
+```console
 $ docker create busybox echo hi there
 77d6ecde2864b171d89dbed290df5da71ed7b9b4132da1fd723d906afa36667d
 
@@ -119,7 +119,7 @@ hi there
    
 To stop a container there are 2 possibilities. In the first option, you can stop the container by using 'stop'. The container executes all commands that are intended for an orderly termination and then stops.
 
-```
+```console
 $ docker create busybox ping google.com
 624409fe10c47444e40390095d0da9fb5f31f60071d485358ce760c517c95fa9
 
@@ -148,7 +148,7 @@ $ docker stop 624409fe10c4
 
 The other possibility is a hard abort with the 'kill' option. Nothing is cleaned up here.
 
-```
+```console
 $ docker create busybox ping google.com
 ae5543d37102976ac6e855584eb05b4084b4fd43f55f3cbbf798a9214e2bf647
 
@@ -183,7 +183,7 @@ ae5543d37102
    
 On a running container you can connect to a shell directly at startup or afterwards. With the commands of the shell you can then take a closer look at the structure of the container.
 
-```
+```console
 $ docker run -it busybox sh
 / # ls
 bin   dev   etc   home  proc  root  sys   tmp   usr   var
@@ -192,7 +192,7 @@ bin   dev   etc   home  proc  root  sys   tmp   usr   var
 
 To connect to an already running container its container Id is used as parameter.
 
-```
+```console
 $ docker run redis
 ...
 

@@ -14,7 +14,7 @@ These 3 ports are defined in a separate file.
 
 Which Pod this definition refers to is determined by the selector with values from the Pod.
 
-```
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -33,7 +33,7 @@ spec:
 
 Afterwards, the installed server can be accessed via the internal IP of the node.
 
-```
+```console
 $ kubectl create -f pod-definition.yml 
 pod/myapp-pod created
 
@@ -76,7 +76,7 @@ Commercial support is available at
 
 For a modern web application the different components are booted as separate containers.
 
-```
+```console
 docker run -d --name=redis redis
 docker run -d --name=db postgresql:9.4
 docker run -d --name=vote -p 5000:80 voting-app
@@ -88,7 +88,7 @@ All components function perfectly. However, they do not know about each other an
 
 To get a stack of connected components, the links must be specified with the '--link' option.
 
-```
+```console
 docker run -d --name=redis redis
 docker run -d --name=db postgresql:9.4
 docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
@@ -108,7 +108,7 @@ Ingress may provide load balancing, SSL termination and name-based virtual hosti
 
 ...
 
-```
+```console
 $ kubectl get networkpolicy
 NAME             POD-SELECTOR   AGE
 payroll-policy   name=payroll   5m6s
@@ -116,7 +116,7 @@ payroll-policy   name=payroll   5m6s
 
 ...
 
-```
+```console
 $ kubectl describe networkpolicy/payroll-policy
 Name:         payroll-policy
 Namespace:    default
