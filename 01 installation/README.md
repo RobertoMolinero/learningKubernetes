@@ -17,7 +17,7 @@ Kubernetes orchestrates container applications. And the most commonly used conta
 
 Therefore Docker should be installed first. Afterwards, two small sample programs will be used to test the correct setup.
 
-```
+```console
 $ su -s roberto
 
 $ sudo apt-get update
@@ -33,7 +33,7 @@ The first test program is a variation of the 'Hello World' program.
 
 The container displays the text 'Hello from Docker!' and some additional information about the program's structure.
 
-```
+```console
 $ docker run hello-world
 
 Hello from Docker!
@@ -60,7 +60,7 @@ For more examples and ideas, visit:
 
 A minimally more complex example, in which the output message can be manipulated via a transferred parameter.
 
-```
+```console
 $ docker run docker/whalesay cowsay Hello World!
  ______________ 
 < Hello World! >
