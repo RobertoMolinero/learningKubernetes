@@ -27,11 +27,19 @@ spec:
 
 The attribute 'hostPath' means that a local storage is created on the system of the node. While this is still okay for test environments, you should not do this for production environments. Firstly, because deployments across multiple nodes would no longer have the same data. On the other hand, complete nodes can also fail.
 
-As an alternative, it is a good idea to use a cloud service provider to store data. For example AWS EBS:
+As an alternative, it is a good idea to use a cloud service provider to store data. For example, the 'Elastic Block Store' (EBS) service from Amazon Web Services. 
 
 ```yaml
   awsElasticBlockStore:
     volumeID: volume-id
+    fsType: ext4
+```
+
+Another possibility would be the 'Persistent Disk' (PS) service of the Google Cloud Platform.
+
+```yaml
+  gcePersistentDisk:
+    pdName: pd-disk
     fsType: ext4
 ```
 
