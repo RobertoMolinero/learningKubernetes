@@ -139,6 +139,12 @@ spec:
 kubectl logs -f event-simulator-pod event-simulator
 ```
 
+...
+
+```console
+kubectl exec -it pod/webapp -- cat /log/app.log
+```
+
 ## Monitoring
 
 ...
