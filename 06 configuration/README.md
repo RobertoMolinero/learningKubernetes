@@ -309,6 +309,17 @@ kubectl label nodes node-1 size=Large
 
 Another resource then refers by means of a 'selector' to all resources that have this label with the specified value.
 
+```console
+kubectl get pods --selector env=dev
+kubectl get all --selector env=dev
+```
+
+To search for a resource with several labels, the search parameters can be linked with commas.  
+
+```console
+kubectl get pods --selector env=dev,bu=finance,tier=frontend
+```
+
 This is often used for 'ReplicaSets' which are supposed to keep a lot of Pods running. Since there may be more than the own Pods in the namespace, they are distinguished by their labels.  
 
 ```yaml
