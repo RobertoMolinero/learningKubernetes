@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: www-pod
+  labels:
+    app: www
+
+spec:
+  containers:
+    - name: run
+      image: docker.io/centos/httpd
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - mountPath: /var/www/html
+          name: source
+  volumes:
+    - name: source
+      emptyDir: {}
+
+  initContainers:
+    - name: download-sources
+      image: busybox
+      command:
+        - wget
+        - https://raw.githubusercontent.com/RobertoMolinero/learningKubernetes/master/07%20pattern/01%20structural/00%20init/00%20copy/wget/index.html
+        - "-P"
+        - "/var/www/html"
+      volumeMounts:
+        - mountPath: /var/www/html
+          name: source

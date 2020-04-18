@@ -1,2 +1,0 @@
-https://raw.githubusercontent.com/RobertoMolinero/learningKubernetes/master/07%20pattern/01%20structural/00%20init/00%20copy/wget/index.html
-https://raw.githubusercontent.com/RobertoMolinero/learningKubernetes/master/07%20pattern/01%20structural/00%20init/00%20copy/wget/k8s-logo.png
